@@ -9,23 +9,21 @@ export default class HelloWorldScene extends Phaser.Scene
 
 	preload()
     {
-        this.load.setBaseURL('http://labs.phaser.io')
-
-        this.load.image('sky', 'assets/skies/space3.png')
-        this.load.image('logo', 'assets/sprites/phaser3-logo.png')
-        this.load.image('red', 'assets/particles/red.png')
+        this.load.image('sky', 'assets/img/nebula10.png')
+        this.load.image('logo', 'assets/img/phaser3-logo.png')
+        this.load.spritesheet('particles', 'assets/img/boom.png', { frameWidth: 960/5, frameHeight: 1344/7 })
     }
 
     create()
     {
         this.add.image(400, 300, 'sky')
 
-        const particles = this.add.particles('red')
+        const particles = this.add.particles('particles', 21)
 
         const emitter = particles.createEmitter({
-            speed: 100,
+            speed: 300,
             scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
+            blendMode: 'ADD',
         })
 
         const logo = this.physics.add.image(400, 100, 'logo')

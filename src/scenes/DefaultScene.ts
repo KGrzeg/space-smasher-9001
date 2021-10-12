@@ -1,21 +1,17 @@
 import Phaser from 'phaser'
 
-export default class HelloWorldScene extends Phaser.Scene
-{
-	constructor()
-	{
-		super('hello-world')
-	}
-
-	preload()
-    {
-        this.load.image('sky', 'assets/img/nebula10.png')
-        this.load.image('logo', 'assets/img/phaser3-logo.png')
-        this.load.spritesheet('particles', 'assets/img/boom.png', { frameWidth: 960/5, frameHeight: 1344/7 })
+export default class DefaultScene extends Phaser.Scene {
+    constructor() {
+        super('hello-world')
     }
 
-    create()
-    {
+    preload() {
+        this.load.image('sky', 'assets/img/nebula10.png')
+        this.load.image('logo', 'assets/img/phaser3-logo.png')
+        this.load.spritesheet('particles', 'assets/img/boom.png', { frameWidth: 192, frameHeight: 192 })
+    }
+
+    create() {
         this.add.image(400, 300, 'sky')
 
         const particles = this.add.particles('particles', 21)

@@ -1,13 +1,17 @@
 import Phaser from 'phaser'
+import Ship from '../classes/Ship'
 
 export default class DefaultScene extends Phaser.Scene {
+    player?: Ship
+
     constructor() {
-        super('hello-world')
+        super('default-scene')
     }
 
     preload() {
         this.load.image('sky', 'assets/img/nebula10.png')
         this.load.image('logo', 'assets/img/phaser3-logo.png')
+        this.load.image('ship', 'assets/img/ship.png')
         this.load.spritesheet('particles', 'assets/img/boom.png', { frameWidth: 192, frameHeight: 192 })
     }
 
@@ -29,5 +33,7 @@ export default class DefaultScene extends Phaser.Scene {
         logo.setCollideWorldBounds(true)
 
         emitter.startFollow(logo)
+
+        this.player = new Ship(this)
     }
 }

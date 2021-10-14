@@ -8,6 +8,8 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
   readonly colliderRadiusRatio = 0.43
   readonly wrapMargin = 10
 
+  readonly fireRate = 5 //shoots/s
+
   bullets?: Bullets
 
   constructor(scene: Phaser.Scene) {
@@ -29,18 +31,16 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.setDrag(this.dragForce)
     this.body.setCircle(this.width * this.colliderRadiusRatio)
 
-    this.bullets = new Bullets(scene)
+    this.bullets = new Bullets(scene, this.fireRate)
   }
 
-  preUpdate(time, delta) {
+  preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta)
 
     const keyUp = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
     const keyDown = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
     const keyLeft = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
     const keyRight = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-
-    const keyShoot = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
 
     const vec = new Phaser.Math.Vector2(0, 0)
 
@@ -49,10 +49,10 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     if (keyRight.isDown) vec.x = this.acceleration
     if (keyLeft.isDown) vec.x = -this.acceleration
 
-    if (keyShoot.isDown) this.bullets.fireBullet(this.x, this.y);
+    if (this.scene.input.activePointer.leftButtonDown())
+      this.bullets!.fireBullet(time, this);
 
     this.body.velocity.add(vec)
     this.scene.physics.world.wrap(this, this.wrapMargin)
   }
-
 }

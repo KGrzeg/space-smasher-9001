@@ -52,6 +52,11 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     if (this.scene.input.activePointer.leftButtonDown())
       this.bullets!.fireBullet(time, this);
 
+    this.rotation = Phaser.Math.Angle.BetweenPoints(
+      this,
+      this.scene.input.activePointer
+    ) + Math.PI / 2
+
     this.body.velocity.add(vec)
     this.scene.physics.world.wrap(this, this.wrapMargin)
   }

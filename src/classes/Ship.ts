@@ -1,16 +1,19 @@
 import Phaser from 'phaser'
 import Bullets from './Bullets'
+import Thruster from './Thruster'
 
 export default class Ship extends Phaser.Physics.Arcade.Sprite {
   readonly acceleration = 5
   readonly dragForce = 0.6
+  readonly maxSpeed = 300
 
   readonly colliderRadiusRatio = 0.43
   readonly wrapMargin = 10
 
   readonly fireRate = 5 //shoots/s
 
-  bullets?: Bullets
+  bullets: Bullets
+  thruster: Thruster
 
   constructor(scene: Phaser.Scene) {
     super(
@@ -32,6 +35,8 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.body.setCircle(this.width * this.colliderRadiusRatio)
 
     this.bullets = new Bullets(scene, this.fireRate)
+    this.thruster = new Thruster(scene, this)
+    this.setMaxVelocity(this.maxSpeed)
   }
 
   preUpdate(time: number, delta: number) {
@@ -59,5 +64,6 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
     this.body.velocity.add(vec)
     this.scene.physics.world.wrap(this, this.wrapMargin)
+    this.thruster.update(time, delta)
   }
 }

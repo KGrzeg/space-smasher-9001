@@ -1,8 +1,11 @@
 import Phaser from 'phaser'
+import Bullet from '../classes/Bullet'
 
 export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
-  static unbornAge = 1000 // asteroid can't kill player
-                          // if younger than 1000ms
+  // asteroid can't kill player
+  // if younger than unbornAge in ms
+  static unbornAge = 1000
+
   readonly wrapMargin = 30
 
   age = 0
@@ -30,9 +33,18 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
 
   preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta)
-    
+
     this.scene.physics.world.wrap(this, this.scale * this.wrapMargin)
     this.age += delta
+  }
+
+  gotHit(me, bullet) {
+    if (!(bullet instanceof Bullet)) return
+    if (bullet.active == false) return
+
+    me.destroy() // TODO: use objects pool
+    bullet.setActive(false)
+    bullet.setVisible(false)
   }
 
   private setRandomShade() {

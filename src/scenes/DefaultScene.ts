@@ -3,10 +3,11 @@ import Ship from '../classes/Ship'
 import Asteroid from '../classes/Asteroid'
 
 export default class DefaultScene extends Phaser.Scene {
-  readonly maxGameObjects = 100
+  readonly maxAsteroids = 70
 
   player?: Ship
   rotFrames?: Phaser.Types.Animations.AnimationFrame[]
+  asteroids?: Phaser.GameObjects.Group
 
   constructor() {
     super('default-scene')
@@ -22,6 +23,8 @@ export default class DefaultScene extends Phaser.Scene {
   }
 
   create() {
+    this.asteroids = this.add.group()
+
     Asteroid.createAnimations(this)
     this.add.image(400, 300, 'sky')
 
@@ -32,10 +35,28 @@ export default class DefaultScene extends Phaser.Scene {
       callbackScope: this,
       repeat: -1
     });
+
+    this.hookupCollisions()
   }
 
   spawnAsteroids() {
-    if (this.children.length < this.maxGameObjects)
-      new Asteroid(this)
+    if (this.asteroids!.getLength() < this.maxAsteroids)
+      this.asteroids!.add(new Asteroid(this))
+  }
+
+  hookupCollisions() {
+    // player - asteroids
+    this.physics.add.overlap(
+      this.player!, this.asteroids!, // colliders
+      this.player!.gotHit, // callback
+      undefined, // callback filter
+      this.player // 'this' for callback
+    )
+
+    // bullets - asteroids
+    this.physics.add.overlap(
+      this.asteroids!, this.player!.bullets,
+      Asteroid.prototype.gotHit
+    )
   }
 }

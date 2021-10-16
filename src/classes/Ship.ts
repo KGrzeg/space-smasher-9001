@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import Bullets from './Bullets'
 import Thruster from './Thruster'
+import Asteroid from './Asteroid'
 
 export default class Ship extends Phaser.Physics.Arcade.Sprite {
   readonly acceleration = 5
@@ -65,5 +66,14 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     this.body.velocity.add(vec)
     this.scene.physics.world.wrap(this, this.wrapMargin)
     this.thruster.update(time, delta)
+  }
+
+  gotHit(_, asteroid) {
+    if (!(asteroid instanceof Asteroid)) return
+
+    if (asteroid.age > Asteroid.unbornAge) {
+      console.log("%cU ded", "color:red")
+      this.scene.cameras.main.shake(100, 0.02)
+    }
   }
 }

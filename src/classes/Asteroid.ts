@@ -7,6 +7,9 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
   static unbornAge = 1000
 
   readonly wrapMargin = 30
+  readonly scaleMin = 0.7
+  readonly scaleMax = 1.3
+  readonly scaleRotationFactor = 0.4
 
   age = 0
 
@@ -21,17 +24,18 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this)
     scene.physics.add.existing(this)
 
-    this.anims.play(Asteroid.getRandomAnimationName())
-    if (Phaser.Math.RND.integer() % 2 == 0)
-      this.anims.reverse()
-
     this.setCircle(30, 30, 30)
-    this.setScale(Phaser.Math.RND.realInRange(0.7, 1.3))
+    this.setScale(Phaser.Math.RND.realInRange(this.scaleMin, this.scaleMax))
     this.setVelocity(
       Phaser.Math.RND.realInRange(-100, 100),
       Phaser.Math.RND.realInRange(-100, 100)
     )
     this.setRandomShade()
+    
+    this.anims.play(Asteroid.getRandomAnimationName())
+    this.anims.timeScale = 1 + (this.scaleMax - this.scale) * this.scaleRotationFactor
+    if (Phaser.Math.RND.integer() % 2 == 0)
+      this.anims.reverse()
   }
 
   preUpdate(time: number, delta: number) {

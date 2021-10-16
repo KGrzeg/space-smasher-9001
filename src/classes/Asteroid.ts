@@ -22,6 +22,9 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this)
 
     this.anims.play(Asteroid.getRandomAnimationName())
+    if (Phaser.Math.RND.integer() % 2 == 0)
+      this.anims.reverse()
+
     this.setCircle(30, 30, 30)
     this.setScale(Phaser.Math.RND.realInRange(0.7, 1.3))
     this.setVelocity(

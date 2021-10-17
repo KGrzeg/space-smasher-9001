@@ -5,7 +5,8 @@ declare global {
     myStuff: {
       name?: String | null,
       token?: String | null,
-      password?: String | null,
+      key?: String | null,
+      record?: String | null,
     }
   }
 }
@@ -25,18 +26,28 @@ declare global {
     key: document.getElementById("key"),
   }
 
+  function readDataFromToken(token) {
+    return JSON.parse(
+      atob(token.split('.')[1])
+    )
+  }
+
   function checkIfLogged() {
     const token = localStorage.getItem("token")
-    const name = localStorage.getItem("name")
+    const key = localStorage.getItem("key")
+
     if (token !== null) {
+      const data = readDataFromToken(token)
+
       window.myStuff.token = token
-      window.myStuff.name = name
-      console.log("my stuff", window.myStuff)
+      window.myStuff.name = data.name
+      window.myStuff.record = data.record
+      window.myStuff.key = key
 
       elements.bar.logged!.style.display = ""
       elements.bar.loggedout!.style.display = "none"
-      elements.name!.innerText = name!;
-      elements.key!.innerText = token!;
+      elements.name!.innerText = data.name!;
+      elements.key!.innerText = key!;
     } else {
       console.log("not logged in")
       elements.bar.logged!.style.display = "none"
@@ -44,7 +55,7 @@ declare global {
     }
   }
 
-  function loginByKey() {
+  async function login() {
     const key = prompt("Type in the #key")
 
     if (!key) {
@@ -52,22 +63,20 @@ declare global {
       return
     }
 
-    //TODO: fetch data from server
-    const response = {
-      token: Math.random().toString() + '.abc',
-      name: 'Hagis'
-    }
+    const response = await API.login(key)
 
     localStorage.setItem('token', response.token)
-    localStorage.setItem('name', response.name)
+    localStorage.setItem('key', response.password)
 
     window.myStuff.token = response.token
     window.myStuff.name = response.name
+    window.myStuff.record = response.record
+    window.myStuff.key = response.password
 
     elements.bar.logged!.style.display = ''
     elements.bar.loggedout!.style.display = 'none'
     elements.name!.innerText = response.name
-    elements.key!.innerText = response.token
+    elements.key!.innerText = response.password
   }
 
   async function signup() {
@@ -81,10 +90,12 @@ declare global {
     const response = await API.signup(nickname)
 
     localStorage.setItem('token', response.token)
+    localStorage.setItem('key', response.password)
 
     window.myStuff.token = response.token
     window.myStuff.name = response.name
-    window.myStuff.password = response.password
+    window.myStuff.key = response.password
+    window.myStuff.record = response.record
 
     elements.bar.logged!.style.display = ''
     elements.bar.loggedout!.style.display = 'none'
@@ -112,7 +123,7 @@ declare global {
   function setup() {
     window.myStuff = {}
 
-    elements.buttons.login!.addEventListener("click", loginByKey)
+    elements.buttons.login!.addEventListener("click", login)
     elements.buttons.logout!.addEventListener("click", logout)
     elements.buttons.signup!.addEventListener("click", signup)
 

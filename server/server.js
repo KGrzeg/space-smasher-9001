@@ -84,6 +84,13 @@ app.post("/record", protect, neededArguments(['points', 'shoots', 'time']), jg, 
   })
 })
 
+app.get("/top", (req, res) => {
+  res.json({
+    status: "ok",
+    records: db.getTop()
+  })
+})
+
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.status(401).send('invalid token...');

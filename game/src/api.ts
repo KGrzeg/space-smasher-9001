@@ -2,7 +2,7 @@
 const baseApiPath = "http://localhost:3000"
 
 export default {
-  async post(path: string, data: any) {
+  async post(path: string, data?: any) {
     const headers = {
       'Content-Type': 'application/json'
     }
@@ -15,6 +15,31 @@ export default {
     try {
       response = await fetch(`${baseApiPath}/${path}`, {
         method: "POST",
+        headers,
+        body: JSON.stringify(data)
+      })
+    } catch (err) {
+      console.log("oops");
+
+      console.error(err)
+    }
+
+    return response.json()
+  },
+
+  async get(path: string, data?: any) {
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+
+    if (window.myStuff.token) {
+      headers['Authorization'] = `Bearer ${window.myStuff.token}`
+    }
+
+    let response;
+    try {
+      response = await fetch(`${baseApiPath}/${path}`, {
+        method: "GET",
         headers,
         body: JSON.stringify(data)
       })
@@ -42,4 +67,8 @@ export default {
       time
     })
   },
+
+  async top() {
+    return this.get("top")
+  }
 }

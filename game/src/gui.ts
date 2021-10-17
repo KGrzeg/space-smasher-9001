@@ -145,12 +145,14 @@ declare global {
     elements.key!.innerText = ''
   }
 
-  function setup() {
+  async function setup() {
     window.myStuff = {}
 
     elements.buttons.login!.addEventListener("click", login)
     elements.buttons.logout!.addEventListener("click", logout)
     elements.buttons.signup!.addEventListener("click", signup)
+
+    console.log(await API.top())
 
     checkIfLogged()
   }

@@ -40,6 +40,14 @@ class Database {
       await this.db.write()
     }
   }
+
+  getTop(amount = 15) {
+    return this.db.data.users
+      .filter(user => user.record)
+      .map(user => { return { name: user.name, record: user.record } })
+      .sort((a, b) => a.record > b.record ? -1 : 1)
+      .slice(0, amount)
+  }
 }
 
 export default new Database

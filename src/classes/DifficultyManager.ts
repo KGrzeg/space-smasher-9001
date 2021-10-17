@@ -1,4 +1,4 @@
-import DefaultScene from '../scenes/DefaultScene'
+import PlayScene from '../scenes/PlayScene'
 
 export default class DifficultyManager {
   readonly spawnInterval = 1500 //ms
@@ -6,14 +6,14 @@ export default class DifficultyManager {
   readonly level = 30
   readonly nextLevelRequirementIncrease = 10
 
-  private scene: DefaultScene
+  private scene: PlayScene
   private difficultyLevel = 1
   private points = 0
 
   private spawnAtOnce = 1
   private nextLevelRequirement = 10
 
-  constructor(scene: DefaultScene) {
+  constructor(scene: PlayScene) {
     this.scene = scene
 
     scene.events.on('asteroid:destroy', () => {

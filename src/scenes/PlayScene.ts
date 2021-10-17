@@ -3,7 +3,7 @@ import Ship from '../classes/Ship'
 import Asteroid from '../classes/Asteroid'
 import DifficultyManager from '../classes/DifficultyManager'
 
-export default class DefaultScene extends Phaser.Scene {
+export default class PlayScene extends Phaser.Scene {
   readonly maxAsteroids = 70
 
   player?: Ship
@@ -17,7 +17,7 @@ export default class DefaultScene extends Phaser.Scene {
   backgroundId = 0
 
   constructor() {
-    super('default-scene')
+    super('play-scene')
 
     this.backgroundOrder = []
     for (let i = 1; i < 10; ++i)

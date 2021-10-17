@@ -14,8 +14,7 @@ class Database {
   async read() {
     await this.db.read();
     this.db.data = this.db.data || {
-      users: [],
-      records: []
+      users: []
     }
   }
 
@@ -31,6 +30,15 @@ class Database {
 
   getUserByPassword(password) {
     return this.db.data.users.find(user => user.password === password)
+  }
+
+  async updateRecord(username, record) {
+    const user = this.db.data.users.find(user => user.name == username)
+
+    if (record > user.record) {
+      user.record = record
+      await this.db.write()
+    }
   }
 }
 

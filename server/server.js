@@ -7,6 +7,7 @@ import cors from 'cors'
 
 import auth from './Auth.js'
 import db from './Database.js'
+import jg from './JusticeGuard'
 
 const protect = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -73,6 +74,14 @@ app.post("/login", neededArguments(['key']), async (req, res) => {
     })
 
   res.json(user)
+})
+
+app.post("/record", neededArguments(['points', 'shoots', 'time']), jg, async (req, res) => {
+  db.updateRecord(req.user.name, req.body.points)
+
+  res.json({
+    status: "ok"
+  })
 })
 
 app.use(function (err, req, res, next) {

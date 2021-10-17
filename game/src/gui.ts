@@ -65,6 +65,11 @@ declare global {
 
     const response = await API.login(key)
 
+    if (response.error) {
+      alert(response.error)
+      return
+    }
+
     localStorage.setItem('token', response.token)
     localStorage.setItem('key', response.password)
 
@@ -89,6 +94,11 @@ declare global {
 
     const response = await API.signup(nickname)
 
+    if (response.error) {
+      alert(response.error)
+      return
+    }
+
     localStorage.setItem('token', response.token)
     localStorage.setItem('key', response.password)
 
@@ -106,7 +116,8 @@ declare global {
   function logout() {
     const sure = confirm("Are you sure you want to logout? " +
       "You won't be able to login again without #key. " +
-      "Make sure you copied key before log out!")
+      "Make sure you copied #key before log out!\n\n" +
+      "The #key: " + window.myStuff.key)
 
     if (!sure)
       return

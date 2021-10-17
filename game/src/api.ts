@@ -19,6 +19,8 @@ export default {
         body: JSON.stringify(data)
       })
     } catch (err) {
+      console.log("oops");
+      
       console.error(err)
     }
 

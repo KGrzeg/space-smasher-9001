@@ -12,13 +12,23 @@ export default class DefaultScene extends Phaser.Scene {
   difficulty?: DifficultyManager
   points = 0
   progressLabel?: Phaser.GameObjects.Text
+  background?: Phaser.GameObjects.Image
+  backgroundOrder: number[] = []
+  backgroundId = 0
 
   constructor() {
     super('default-scene')
+
+    this.backgroundOrder = []
+    for (let i = 1; i < 10; ++i)
+      this.backgroundOrder.push(i)
+    //shuffle array
+    this.backgroundOrder = this.backgroundOrder.sort(() => 0.5 - Math.random())
   }
 
   preload() {
-    this.load.image('sky', 'assets/img/nebula10.png')
+    for (let i = 1; i < 10; i++)
+      this.load.image(`sky${i}`, `assets/img/nebula0${i}.png`)
     this.load.image('logo', 'assets/img/phaser3-logo.png')
     this.load.image('ship', 'assets/img/ship.png')
     this.load.image('bullet', 'assets/img/bullet.png')
@@ -31,10 +41,11 @@ export default class DefaultScene extends Phaser.Scene {
     this.difficulty = new DifficultyManager(this)
     this.events.on('getpoint', this.updateLabel, this)
     this.events.on('lvlup', this.updateLabel, this)
+    this.events.on('lvlup', this.changeBackground, this)
     this.events.on('ship:gothit', this.updateLabel, this)
     this.events.on('ship:destroyed', this.gameOver, this)
 
-    this.add.image(400, 300, 'sky')
+    this.background = this.add.image(400, 300, 'sky1')
     this.asteroids = this.add.group()
     this.player = new Ship(this)
     this.progressLabel = this.add.text(5, 5, "", {
@@ -43,6 +54,7 @@ export default class DefaultScene extends Phaser.Scene {
     })
     this.progressLabel.setDepth(1)
 
+    this.changeBackground()
     this.updateLabel()
     this.hookupCollisions()
   }
@@ -50,6 +62,14 @@ export default class DefaultScene extends Phaser.Scene {
   gameOver() {
     console.log("%cU ded", "color:red")
     console.log("points: ", this.difficulty!.getPoints())
+  }
+
+  changeBackground() {
+    const currentId = this.backgroundOrder[this.backgroundId]
+    const key = 'sky' + currentId.toString()
+
+    this.background!.setTexture(key)
+    this.backgroundId = (++this.backgroundId) % this.backgroundOrder.length
   }
 
   spawnAsteroid() {

@@ -4,7 +4,7 @@
 	"description": "Simple Phaser 3 game for the Hackerspace Trójmiasto's little game jam",
 	"scripts": {
 		"start": "parcel src/index.html -p 8000",
-		"build": "parcel build src/index.html --out-dir dist",
+		"build": "parcel build src/index.html --out-dir dist --no-source-maps",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
 	},

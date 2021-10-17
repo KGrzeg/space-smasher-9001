@@ -59,6 +59,12 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
   gotHit(me, bullet) {
     if (!(bullet instanceof Bullet)) return
     if (bullet.active == false) return
+    
+    const exp = me.scene.add.sprite(me.x, me.y, "explosion")
+    exp.play('explode', false)
+    exp.once('animationcomplete', () => {
+      exp.destroy()
+    })
 
     me.scene.events.emit("asteroid:destroy")
     me.destroy()
@@ -87,6 +93,13 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
         repeat: -1
       })
     })
+
+    scene.anims.create({
+      key: "explode",
+      frames: scene.anims.generateFrameNumbers("explosion", { first: 0, end: 13 }),
+      frameRate: 16,
+      repeat: 0
+    });
   }
 
   static getRandomAnimationName() {

@@ -33,6 +33,7 @@ export default class PlayScene extends Phaser.Scene {
     this.load.image('ship', 'assets/img/ship.png')
     this.load.image('bullet', 'assets/img/bullet.png')
     this.load.spritesheet('particles', 'assets/img/boom.png', { frameWidth: 192, frameHeight: 192 })
+    this.load.spritesheet('explosion', 'assets/img/explosion.png', { frameWidth: 64, frameHeight: 64 })
     this.load.multiatlas('asteroids', 'assets/img/asteroids.json', 'assets/img');
   }
 

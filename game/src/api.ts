@@ -31,7 +31,7 @@ export default {
     return this.post("signup", { name })
   },
 
-  async login(password: string) {
-    return this.post("login", { password })
+  async login(key: string) {
+    return this.post("login", { key })
   }
 }

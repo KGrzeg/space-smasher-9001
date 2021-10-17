@@ -26,6 +26,19 @@ const protect = (req, res, next) => {
   })
 }
 
+const neededArguments = (args) => {
+  return (req, res, next) => {
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i];
+      if (!req.body[arg])
+        return res.status(400).json({
+          error: "missing argument " + arg
+        })
+    }
+    next()
+  }
+}
+
 const app = express()
 app.use(morgan('combined'))
 app.use(express.json())
@@ -40,14 +53,7 @@ app.get("/secured", protect, (req, res) => {
   res.json({ message: "You can see it!", payload: req.user })
 })
 
-app.post("/signup", async (req, res) => {
-  console.log("No co jest??", req.body)
-
-  if (!req.body.name)
-    return res.status(400).json({
-      error: "missing argument name"
-    })
-
+app.post("/signup", neededArguments(['name']), async (req, res) => {
   const user = await auth.createAccount(req.body.name)
 
   if (user.error)
@@ -58,13 +64,8 @@ app.post("/signup", async (req, res) => {
   res.json(user)
 })
 
-app.post("/login", async (req, res) => {
-  if (!req.body.password)
-    return res.status(400).json({
-      error: "missing argument password"
-    })
-
-  const user = auth.login(req.body.password)
+app.post("/login", neededArguments(['key']), async (req, res) => {
+  const user = auth.login(req.body.key)
 
   if (user.error)
     return res.status(400).json({

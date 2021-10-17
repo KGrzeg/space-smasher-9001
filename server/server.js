@@ -41,14 +41,30 @@ app.post("/signup", async (req, res) => {
       error: "missing argument name"
     })
 
-  const info = await auth.createAccount(req.body.name)
+  const user = await auth.createAccount(req.body.name)
 
-  if (info.error)
+  if (user.error)
     return res.status(400).json({
-      error: info.error
+      error: user.error
     })
 
-  res.json(info)
+  res.json(user)
+})
+
+app.post("/login", async (req, res) => {
+  if (!req.body.password)
+    return res.status(400).json({
+      error: "missing argument password"
+    })
+
+  const user = auth.login(req.body.password)
+
+  if (user.error)
+    return res.status(400).json({
+      error: user.error
+    })
+
+  res.json(user)
 })
 
 app.use(function (err, req, res, next) {

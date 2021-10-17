@@ -28,6 +28,10 @@ class Database {
     await this.db.write()
     return user
   }
+
+  getUserByPassword(password) {
+    return this.db.data.users.find(user => user.password === password)
+  }
 }
 
 export default new Database

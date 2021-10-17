@@ -1,3 +1,4 @@
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 import { randomBytes } from 'crypto'
 import jwt from 'jsonwebtoken'
 import db from './Database.js'
@@ -12,25 +13,42 @@ export default {
       }
     }
 
-    const pass = randomBytes(16).toString('hex')
+    const password = randomBytes(16).toString('hex')
     const token = jwt.sign({
       name: name,
       record: 0,
-      rank: 0
     }, process.env.secret)
 
     await db.addUser({
       name,
-      pass,
+      password: password,
       record: 0,
-      rank: 0,
     })
 
     return {
       name,
-      pass,
+      password: password,
       record: 0,
-      rank: 0,
+      token
+    }
+  },
+  
+  login(password) {
+    console.log("Logging user");
+    const user = db.getUserByPassword(password)
+
+    if (!user) {
+      return {
+        error: "User does not exists"
+      }
+    }
+    const token = jwt.sign({
+      name: user.name,
+      record: user.record,
+    }, process.env.secret)
+
+    return {
+      ...user,
       token
     }
   }

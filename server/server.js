@@ -3,6 +3,7 @@ import 'dotenv/config'
 import express from 'express'
 import jwt from 'jsonwebtoken'
 import morgan from 'morgan'
+import cors from 'cors'
 
 import auth from './Auth.js'
 import db from './Database.js'
@@ -28,6 +29,7 @@ const protect = (req, res, next) => {
 const app = express()
 app.use(morgan('combined'))
 app.use(express.json())
+app.use(cors())
 
 app.get("/", (_, res) => {
   res.json({ message: "Hello! API here" })
@@ -39,6 +41,8 @@ app.get("/secured", protect, (req, res) => {
 })
 
 app.post("/signup", async (req, res) => {
+  console.log("No co jest??", req.body)
+
   if (!req.body.name)
     return res.status(400).json({
       error: "missing argument name"

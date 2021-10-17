@@ -1,4 +1,14 @@
-declare interface Window { myStuff: any }
+import API from './api'
+
+declare global {
+  interface Window {
+    myStuff: {
+      name?: String | null,
+      token?: String | null,
+      password?: String | null,
+    }
+  }
+}
 
 (() => {
   const elements = {
@@ -60,7 +70,7 @@ declare interface Window { myStuff: any }
     elements.key!.innerText = response.token
   }
 
-  function signup() {
+  async function signup() {
     const nickname = prompt("Your nickname:")
 
     if (!nickname) {
@@ -68,29 +78,18 @@ declare interface Window { myStuff: any }
       return
     }
 
-    // TODO: Fetch data from server
-
-    //mock bad request
-    if (nickname == 'Hgs') {
-      alert("The name is occupied by someone else, try again with another nickname")
-      return
-    }
-
-    const response = {
-      token: Math.random().toString() + '.abc',
-      name: nickname!
-    }
+    const response = await API.signup(nickname)
 
     localStorage.setItem('token', response.token)
-    localStorage.setItem('name', response.name)
 
     window.myStuff.token = response.token
     window.myStuff.name = response.name
+    window.myStuff.password = response.password
 
     elements.bar.logged!.style.display = ''
     elements.bar.loggedout!.style.display = 'none'
     elements.name!.innerText = response.name
-    elements.key!.innerText = response.token
+    elements.key!.innerText = response.password
   }
 
   function logout() {

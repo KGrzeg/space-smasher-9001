@@ -1,8 +1,12 @@
 {
 	"compilerOptions": {
-		"target": "es2016",
+		"target": "es5",
 		"module": "es6",
 		"strict": true,
+		"lib": [
+			"es2015",
+			"dom"
+		],
 		"noImplicitAny": false,
 		"noEmit": true,
 		"allowJs": true,
@@ -15,7 +19,9 @@
 		"sourceMap": true,
 		"baseUrl": "./src",
 		"paths": {
-		  "~/*": ["./*"]
+			"~/*": [
+				"./*"
+			]
 		},
 		"typeRoots": [
 			"node_modules/@types",

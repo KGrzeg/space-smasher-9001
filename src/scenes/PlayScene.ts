@@ -48,7 +48,7 @@ export default class PlayScene extends Phaser.Scene {
     this.asteroids = this.add.group()
     this.player = new Ship(this)
     this.progressLabel = this.add.text(5, 5, "", {
-      font: '32px Arial',
+      font: '32px Verdana',
       color: 'cyan'
     })
     this.progressLabel.setDepth(1)

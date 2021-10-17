@@ -21,7 +21,7 @@ export default class PlayScene extends Phaser.Scene {
       this.cameras.main.centerX,
       this.cameras.main.centerY - 100,
       "KONIEC GRY", {
-      font: '64px Arial',
+      font: '64px Verdana',
     }).setOrigin(0.5, 0.5)
 
     const rank = 0
@@ -35,7 +35,7 @@ export default class PlayScene extends Phaser.Scene {
       "Poziom: " + lvl,
       "Czas Gry: " + time + 's',
     ], {
-      font: '32px Arial',
+      font: '32px Verdana',
       align: 'center',
       color: 'cyan'
     }).setOrigin(0.5, 0.5)

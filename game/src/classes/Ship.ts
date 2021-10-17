@@ -16,6 +16,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
   bullets: Bullets
   thruster: Thruster
   life = 3
+  shoots = 0
 
   constructor(scene: Phaser.Scene) {
     super(
@@ -56,8 +57,10 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     if (keyRight.isDown) vec.x = this.acceleration
     if (keyLeft.isDown) vec.x = -this.acceleration
 
-    if (this.scene.input.activePointer.leftButtonDown())
-      this.bullets!.fireBullet(time, this);
+    if (this.scene.input.activePointer.leftButtonDown()) {
+      if (this.bullets!.fireBullet(time, this))
+        this.shoots++
+    }
 
     this.rotation = Phaser.Math.Angle.BetweenPoints(
       this,
@@ -78,8 +81,8 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
       asteroid.destroy() //TODO: use objects pool
       this.scene.events.emit("ship:gothit")
     }
-    
-    if (!this.life){
+
+    if (!this.life) {
       this.scene.events.emit("ship:destroyed")
     }
   }

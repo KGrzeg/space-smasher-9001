@@ -34,7 +34,8 @@ export default class StartScene extends Phaser.Scene {
     }).setOrigin(0.5, 0.5)
 
     this.input.on('pointerup', () => {
-      this.scene.start('play-scene', window.myStuff);
+      window.freezeGui()
+      this.scene.start('play-scene');
     });
   }
 }

@@ -20,7 +20,7 @@ export default {
       })
     } catch (err) {
       console.log("oops");
-      
+
       console.error(err)
     }
 
@@ -33,5 +33,13 @@ export default {
 
   async login(key: string) {
     return this.post("login", { key })
-  }
+  },
+
+  async record(points: number, shoots: number, time: number) {
+    return this.post("record", {
+      points,
+      shoots,
+      time
+    })
+  },
 }

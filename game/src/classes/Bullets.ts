@@ -27,6 +27,9 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
     if (bullet && this.lastShoot + this.cooldown <= time) {
       bullet.fire(shooter.x, shooter.y, shooter.rotation)
       this.lastShoot = time
+      return true
     }
+
+    return false
   }
 }

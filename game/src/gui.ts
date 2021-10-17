@@ -8,6 +8,8 @@ declare global {
       key?: String | null,
       record?: String | null,
     }
+    freezeGui: Function,
+    unfreezeGui: Function
   }
 }
 
@@ -24,6 +26,18 @@ declare global {
     },
     name: document.getElementById("name"),
     key: document.getElementById("key"),
+  }
+
+  window.freezeGui = () => {
+    (elements.buttons.login as HTMLButtonElement).disabled = true;
+    (elements.buttons.logout as HTMLButtonElement).disabled = true;
+    (elements.buttons.signup as HTMLButtonElement).disabled = true;
+  }
+
+  window.unfreezeGui = () => {
+    (elements.buttons.login as HTMLButtonElement).disabled = false;
+    (elements.buttons.logout as HTMLButtonElement).disabled = false;
+    (elements.buttons.signup as HTMLButtonElement).disabled = false;
   }
 
   function readDataFromToken(token) {

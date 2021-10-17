@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import API from "../api"
 
 export default class PlayScene extends Phaser.Scene {
 
@@ -11,7 +12,7 @@ export default class PlayScene extends Phaser.Scene {
     this.load.image('hs3-logo', 'assets/img/hs3-logo.png')
   }
 
-  create(data) {
+  async create(data) {
     console.log("Show end screen with data:", data)
 
     this.add.image(250, 550, 'phaser-logo').setScale(0.5)
@@ -27,6 +28,7 @@ export default class PlayScene extends Phaser.Scene {
     const rank = 0
     const pts = data.points || 0
     const lvl = data.level || 0
+    const shts = data.shoots || 0
     const time = Math.ceil(data.elapsedTime || 0)
 
     this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, [
@@ -39,5 +41,9 @@ export default class PlayScene extends Phaser.Scene {
       align: 'center',
       color: 'cyan'
     }).setOrigin(0.5, 0.5)
+
+    if (window.myStuff.token)
+      await API.record(pts, shts, time)
+    window.unfreezeGui()
   }
 }

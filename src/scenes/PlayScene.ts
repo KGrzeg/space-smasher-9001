@@ -22,8 +22,7 @@ export default class PlayScene extends Phaser.Scene {
     this.backgroundOrder = []
     for (let i = 1; i < 10; ++i)
       this.backgroundOrder.push(i)
-    //shuffle array
-    this.backgroundOrder = this.backgroundOrder.sort(() => 0.5 - Math.random())
+    Phaser.Utils.Array.Shuffle(this.backgroundOrder)
   }
 
   preload() {

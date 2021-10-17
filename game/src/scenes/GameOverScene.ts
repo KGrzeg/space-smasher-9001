@@ -26,25 +26,27 @@ export default class PlayScene extends Phaser.Scene {
       await window.updateTopList()
     }
 
-    console.log("Show end screen with data:", data)
-
     this.add.image(250, 550, 'phaser-logo').setScale(0.5)
     this.add.image(550, 550, 'hs3-logo').setScale(0.5)
 
     this.add.text(
       this.cameras.main.centerX,
-      this.cameras.main.centerY - 100,
+      110,
       "KONIEC GRY", {
       font: '64px Verdana',
     }).setOrigin(0.5, 0.5)
 
     const lines: string[] = []
-    if (rank) { lines.push("Miejsce w rankingu: #" + rank) }
+    if (rank) {
+      lines.push("Aktualne miejsce w rankingu:")
+      lines.push("#" + rank)
+      lines.push("")
+    }
     lines.push("Punkty: " + pts)
     lines.push("Poziom: " + lvl)
     lines.push("Czas Gry: " + time + 's')
 
-    this.add.text(this.cameras.main.centerX, this.cameras.main.centerY,
+    this.add.text(this.cameras.main.centerX, 290,
       lines,
       {
         font: '32px Verdana',
@@ -53,5 +55,19 @@ export default class PlayScene extends Phaser.Scene {
       }).setOrigin(0.5, 0.5)
 
     window.unfreezeGui()
+
+    setTimeout(() => {
+      this.add.text(this.cameras.main.centerX, 450,
+        "Kliknij aby zacząć od nowa",
+        {
+          font: '32px Verdana',
+          align: 'center',
+          color: 'yellow'
+        }).setOrigin(0.5, 0.5)
+
+      this.input.on('pointerup', () => {
+        this.scene.start('start-scene');
+      });
+    }, 5000)
   }
 }

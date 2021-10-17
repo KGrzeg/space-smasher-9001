@@ -16,6 +16,7 @@ export default class PlayScene extends Phaser.Scene {
   backgroundOrder: number[] = []
   backgroundId = 0
   startTimestamp: number = 0
+  gameOverState = false
 
   constructor() {
     super('play-scene')
@@ -60,8 +61,10 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   gameOver() {
+    if (this.gameOverState) return
+
     console.log("%cU ded", "color:red")
-    console.log("points: ", this.difficulty!.getPoints())
+    this.gameOverState = true
     this.scene.start('game-over-scene', {
       points: this.difficulty!.getPoints(),
       level: this.difficulty!.getLevel(),

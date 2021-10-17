@@ -17,21 +17,30 @@ export default class StartScene extends Phaser.Scene {
 
     this.add.text(
       this.cameras.main.centerX,
-      this.cameras.main.centerY - 100,
-      "SPACE SMASHER 9001!", {
+      130,
+      "SPACE SMASHER\n9001!", {
       font: '64px Verdana',
+      align: "center"
     }).setOrigin(0.5, 0.5)
 
     this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, [
-      "Naciśnij przycisk aby zacząć",
+      "Zaloguj się przed rozpoczęciem gry",
+      "za pomocą panelu na górze, aby zdobywać rekord.",
       "",
-      "Zaloguj się przed rozpoczęciem gry, aby zachować rekord",
-      "albo graj jako gość (bez rankingu)"
+      "Możesz też zagrać jako gość (bez rankingu)."
     ], {
       font: '21px Verdana',
       align: 'center',
       color: 'cyan'
     }).setOrigin(0.5, 0.5)
+
+    this.add.text(this.cameras.main.centerX, 450,
+      "Kliknij aby zacząć grę",
+      {
+        font: '32px Verdana',
+        align: 'center',
+        color: 'yellow'
+      }).setOrigin(0.5, 0.5)
 
     this.input.on('pointerup', () => {
       window.freezeGui()

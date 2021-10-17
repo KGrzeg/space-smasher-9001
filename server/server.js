@@ -78,9 +78,13 @@ app.post("/login", neededArguments(['key']), async (req, res) => {
 
 app.post("/record", protect, neededArguments(['points', 'shoots', 'time']), jg, async (req, res) => {
   db.updateRecord(req.user.name, req.body.points)
+  const rank = db.getRank(req.user.name)
+
+  console.log(req.user, rank)
 
   res.json({
-    status: "ok"
+    status: "ok",
+    rank: rank
   })
 })
 

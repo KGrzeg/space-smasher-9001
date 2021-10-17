@@ -48,6 +48,19 @@ class Database {
       .sort((a, b) => a.record > b.record ? -1 : 1)
       .slice(0, amount)
   }
+
+  getRank(username) {
+    const users = this.db.data.users
+      .filter(user => user.record)
+      .sort((a, b) => a.record > b.record ? -1 : 1)
+
+    for (let i = 0; i < users.length; ++i) {
+      if (users[i].name == username)
+        return i + 1
+    }
+
+    return 0
+  }
 }
 
 export default new Database

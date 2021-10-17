@@ -61,7 +61,7 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
     if (bullet.active == false) return
 
     me.scene.events.emit("asteroid:destroy")
-    me.destroy() // TODO: use objects pool
+    me.destroy()
     bullet.setActive(false)
     bullet.setVisible(false)
   }

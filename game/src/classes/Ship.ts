@@ -78,7 +78,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     if (asteroid.age > Asteroid.unbornAge) {
       this.life -= 1
       this.scene.cameras.main.shake(100, 0.02)
-      asteroid.destroy() //TODO: use objects pool
+      asteroid.destroy()
       this.scene.events.emit("ship:gothit")
     }
 

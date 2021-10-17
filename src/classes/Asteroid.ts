@@ -31,7 +31,7 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
       Phaser.Math.RND.realInRange(-100, 100)
     )
     this.setRandomShade()
-    
+
     this.anims.play(Asteroid.getRandomAnimationName())
     this.anims.timeScale = 1 + (this.scaleMax - this.scale) * this.scaleRotationFactor
     if (Phaser.Math.RND.integer() % 2 == 0)
@@ -49,6 +49,7 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
     if (!(bullet instanceof Bullet)) return
     if (bullet.active == false) return
 
+    me.scene.events.emit("asteroid:destroy")
     me.destroy() // TODO: use objects pool
     bullet.setActive(false)
     bullet.setVisible(false)

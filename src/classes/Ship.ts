@@ -15,6 +15,7 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
 
   bullets: Bullets
   thruster: Thruster
+  life = 3
 
   constructor(scene: Phaser.Scene) {
     super(
@@ -72,8 +73,14 @@ export default class Ship extends Phaser.Physics.Arcade.Sprite {
     if (!(asteroid instanceof Asteroid)) return
 
     if (asteroid.age > Asteroid.unbornAge) {
-      console.log("%cU ded", "color:red")
+      this.life -= 1
       this.scene.cameras.main.shake(100, 0.02)
+      asteroid.destroy() //TODO: use objects pool
+      this.scene.events.emit("ship:gothit")
+    }
+    
+    if (!this.life){
+      this.scene.events.emit("ship:destroyed")
     }
   }
 }

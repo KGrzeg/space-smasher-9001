@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 import Ship from '../classes/Ship'
 import Asteroid from '../classes/Asteroid'
+import DifficultyManager from '../classes/DifficultyManager'
 
 export default class DefaultScene extends Phaser.Scene {
   readonly maxAsteroids = 70
@@ -8,6 +9,9 @@ export default class DefaultScene extends Phaser.Scene {
   player?: Ship
   rotFrames?: Phaser.Types.Animations.AnimationFrame[]
   asteroids?: Phaser.GameObjects.Group
+  difficulty?: DifficultyManager
+  points = 0
+  progressLabel?: Phaser.GameObjects.Text
 
   constructor() {
     super('default-scene')
@@ -23,25 +27,43 @@ export default class DefaultScene extends Phaser.Scene {
   }
 
   create() {
-    this.asteroids = this.add.group()
-
     Asteroid.createAnimations(this)
+    this.difficulty = new DifficultyManager(this)
+    this.events.on('getpoint', this.updateLabel, this)
+    this.events.on('lvlup', this.updateLabel, this)
+    this.events.on('ship:gothit', this.updateLabel, this)
+    this.events.on('ship:destroyed', this.gameOver, this)
+
     this.add.image(400, 300, 'sky')
-
+    this.asteroids = this.add.group()
     this.player = new Ship(this)
-    this.time.addEvent({
-      delay: 1500,  // ms
-      callback: this.spawnAsteroids,
-      callbackScope: this,
-      repeat: -1
-    });
+    this.progressLabel = this.add.text(5, 5, "", {
+      font: '32px Arial',
+      color: 'cyan'
+    })
+    this.progressLabel.setDepth(1)
 
+    this.updateLabel()
     this.hookupCollisions()
   }
 
-  spawnAsteroids() {
-    if (this.asteroids!.getLength() < this.maxAsteroids)
+  gameOver() {
+    console.log("%cU ded", "color:red")
+    console.log("points: ", this.difficulty!.getPoints())
+  }
+
+  spawnAsteroid() {
+    if (this.asteroids!.getLength() < this.difficulty!.getMaxAsteroids())
       this.asteroids!.add(new Asteroid(this))
+  }
+
+  updateLabel() {
+    const lvl = this.difficulty!.getLevel()
+    const pts = this.difficulty!.getPoints()
+    const lives = this.player!.life
+
+    const str = `Level: ${lvl}\tPoints: ${pts}\tHP: ${lives}`
+    this.progressLabel!.text = str
   }
 
   hookupCollisions() {

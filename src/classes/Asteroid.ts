@@ -36,6 +36,17 @@ export default class Asteroid extends Phaser.Physics.Arcade.Sprite {
     this.anims.timeScale = 1 + (this.scaleMax - this.scale) * this.scaleRotationFactor
     if (Phaser.Math.RND.integer() % 2 == 0)
       this.anims.reverse()
+
+    this.setAlpha(0)
+    scene.tweens.addCounter({
+      from: 0,
+      to: 1,
+      duration: Asteroid.unbornAge,
+      onUpdate: (tween) => {
+        const value = tween.getValue()
+        this.setAlpha(value)
+      }
+    });
   }
 
   preUpdate(time: number, delta: number) {

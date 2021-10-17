@@ -3,22 +3,25 @@ import DefaultScene from '../scenes/DefaultScene'
 export default class DifficultyManager {
   readonly spawnInterval = 1500 //ms
   readonly maxAsteroids = 300
-  readonly intervalDecrementPerLevel = 30
+  readonly level = 30
+  readonly nextLevelRequirementIncrease = 10
 
   private scene: DefaultScene
   private difficultyLevel = 1
   private points = 0
 
   private spawnAtOnce = 1
+  private nextLevelRequirement = 10
 
   constructor(scene: DefaultScene) {
     this.scene = scene
 
     scene.events.on('asteroid:destroy', () => {
       this.points += 1
+      this.nextLevelRequirement -= 1
       this.scene.events.emit("getpoint", this.difficultyLevel)
 
-      if (this.points % 10 == 0)
+      if (this.nextLevelRequirement <= 0)
         this.levelUp()
     })
 
@@ -33,6 +36,7 @@ export default class DifficultyManager {
   levelUp() {
     this.difficultyLevel += 1
     this.spawnAtOnce += 1
+    this.nextLevelRequirement = this.difficultyLevel * this.nextLevelRequirementIncrease
     this.scene.events.emit("lvlup", this.difficultyLevel)
   }
 

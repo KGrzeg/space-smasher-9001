@@ -16,6 +16,7 @@ export default class PlayScene extends Phaser.Scene {
   backgroundOrder: number[] = []
   backgroundId = 0
   startTimestamp: number = 0
+  auth: any
 
   constructor() {
     super('play-scene')
@@ -35,7 +36,10 @@ export default class PlayScene extends Phaser.Scene {
     this.load.multiatlas('asteroids', 'assets/img/asteroids.json', 'assets/img');
   }
 
-  create() {
+  create(data) {
+    console.log("Started game with", data)
+    this.auth = data
+
     Asteroid.createAnimations(this)
     this.difficulty = new DifficultyManager(this)
     this.events.on('getpoint', this.updateLabel, this)

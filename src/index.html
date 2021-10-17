@@ -2,10 +2,24 @@
 
 <head>
 	<title>Miner</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+	<div class="bar">
+		<div id="loggedbar" class="logged-in" style="display: none">
+			Logged in as <span id="name">username</span>
+			<span id="key" class="key">#asdasdasdasd</span>
+			<button id="logout">Log out</button>
+		</div>
+		<div id="loggedoutbar" class="logged-out" style="display: none">
+			Not logged in
+			<button id="login">Log in with #key</button>
+			<button id="signup">Sign up</button>
+		</div>
+	</div>
 	<script src="main.ts"></script>
+	<script src="gui.ts"></script>
 </body>
 
 </html>

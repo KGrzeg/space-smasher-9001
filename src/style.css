@@ -1,0 +1,31 @@
+html,body{
+  padding: 0;
+  margin: 0;
+  position: relative;
+  background-color: black;
+  font-family: "Verdana", "Geneva", "Tahoma", "sans-serif";
+}
+
+body {
+  background-image: url('../public/assets/img/stars.png');
+}
+
+.bar {
+  width: 100%;
+  background-color: aqua;
+  width: 800px;
+  margin:auto;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.key {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+canvas {
+  display: block;
+  width: 800px;
+  margin: auto;
+  box-shadow: 0 0 35px rgba(0,255,255,0.3);
+}

@@ -21,9 +21,11 @@ export default class PlayScene extends Phaser.Scene {
 
     if (window.myStuff.token) {
       const response = await API.record(pts, shts, time)
-      rank = response.rank
 
-      await window.updateTopList()
+      if (response.rank) {
+        rank = response.rank
+        await window.updateTopList()
+      }
     }
 
     this.add.image(250, 550, 'phaser-logo').setScale(0.5)

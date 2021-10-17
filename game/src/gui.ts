@@ -9,7 +9,8 @@ declare global {
       record?: String | null,
     }
     freezeGui: Function,
-    unfreezeGui: Function
+    unfreezeGui: Function,
+    updateTopList: Function
   }
 }
 
@@ -26,6 +27,7 @@ declare global {
     },
     name: document.getElementById("name"),
     key: document.getElementById("key"),
+    top: document.getElementById("top"),
   }
 
   window.freezeGui = () => {
@@ -38,6 +40,14 @@ declare global {
     (elements.buttons.login as HTMLButtonElement).disabled = false;
     (elements.buttons.logout as HTMLButtonElement).disabled = false;
     (elements.buttons.signup as HTMLButtonElement).disabled = false;
+  }
+
+  window.updateTopList = async () => {
+    elements.top!.innerText = "";
+    const records = await API.top()
+    records.records.forEach(rec => {
+      elements.top!.innerHTML += `<li>${rec.name} ${rec.record}pts</li>\n`
+    });
   }
 
   function readDataFromToken(token) {
@@ -152,7 +162,7 @@ declare global {
     elements.buttons.logout!.addEventListener("click", logout)
     elements.buttons.signup!.addEventListener("click", signup)
 
-    console.log(await API.top())
+    await window.updateTopList()
 
     checkIfLogged()
   }

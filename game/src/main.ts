@@ -10,6 +10,8 @@ const config: Phaser.Types.Core.GameConfig = {
 	width: 800,
 	height: 600,
 
+	parent: "gameBox",
+
 	physics: {
 		default: 'arcade',
 		arcade: {

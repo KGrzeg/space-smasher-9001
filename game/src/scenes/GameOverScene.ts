@@ -42,8 +42,10 @@ export default class PlayScene extends Phaser.Scene {
       color: 'cyan'
     }).setOrigin(0.5, 0.5)
 
-    if (window.myStuff.token)
+    if (window.myStuff.token) {
       await API.record(pts, shts, time)
+      await window.updateTopList()
+    }
     window.unfreezeGui()
   }
 }

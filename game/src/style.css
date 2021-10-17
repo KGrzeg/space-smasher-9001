@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,body{
   padding: 0;
   margin: 0;
@@ -23,9 +27,25 @@ body {
   font-family: 'Courier New', Courier, monospace;
 }
 
-canvas {
+#gameBox {
   display: block;
   width: 800px;
   margin: auto;
   box-shadow: 0 0 35px rgba(0,255,255,0.3);
+  position: relative;
+}
+
+.records {
+  display: block;
+  position: absolute;
+  background-color: yellow;
+  width: 250px;
+  right: -270px;
+  padding: 20px;
+}
+
+h4 {
+  margin: 0;
+  margin-bottom: 10px;
+  text-align: center;
 }

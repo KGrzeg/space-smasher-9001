@@ -18,7 +18,7 @@ body {
   width: 100%;
   background-color: aqua;
   width: 800px;
-  margin:auto;
+  margin: auto;
   margin-bottom: 10px;
   text-align: center;
 }
@@ -48,4 +48,14 @@ h4 {
   margin: 0;
   margin-bottom: 10px;
   text-align: center;
+}
+
+@media screen and (max-width: 1350px) {
+  .bar {
+    margin-left: 20px;
+  }
+
+  #gameBox {
+    margin-left: 20px;
+  }
 }

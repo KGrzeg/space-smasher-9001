@@ -2,6 +2,8 @@ import 'dotenv/config'
 
 import express from 'express'
 import jwt from 'jsonwebtoken'
+import morgan from 'morgan'
+
 import auth from './Auth.js'
 import db from './Database.js'
 
@@ -24,6 +26,7 @@ const protect = (req, res, next) => {
 }
 
 const app = express()
+app.use(morgan('combined'))
 app.use(express.json())
 
 app.get("/", (_, res) => {

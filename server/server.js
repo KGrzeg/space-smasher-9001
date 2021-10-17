@@ -1,9 +1,11 @@
-import express from 'express';
+import express from 'express'
+import 'dotenv/config'
 
-const app = express();
+const app = express()
 
 app.get("/", (req, res) => {
-    res.send("hello");
+    res.send("hello")
+    console.log(process.env.secret);
 });
 
-app.listen(3000);
+app.listen(3000)

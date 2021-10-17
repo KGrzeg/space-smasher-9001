@@ -15,6 +15,7 @@ export default class PlayScene extends Phaser.Scene {
   background?: Phaser.GameObjects.Image
   backgroundOrder: number[] = []
   backgroundId = 0
+  startTimestamp: number = 0
 
   constructor() {
     super('play-scene')
@@ -28,7 +29,6 @@ export default class PlayScene extends Phaser.Scene {
   preload() {
     for (let i = 1; i < 10; i++)
       this.load.image(`sky${i}`, `assets/img/nebula0${i}.png`)
-    this.load.image('logo', 'assets/img/phaser3-logo.png')
     this.load.image('ship', 'assets/img/ship.png')
     this.load.image('bullet', 'assets/img/bullet.png')
     this.load.spritesheet('particles', 'assets/img/boom.png', { frameWidth: 192, frameHeight: 192 })
@@ -53,6 +53,7 @@ export default class PlayScene extends Phaser.Scene {
     })
     this.progressLabel.setDepth(1)
 
+    this.startTimestamp = this.time.now
     this.changeBackground()
     this.updateLabel()
     this.hookupCollisions()
@@ -61,6 +62,11 @@ export default class PlayScene extends Phaser.Scene {
   gameOver() {
     console.log("%cU ded", "color:red")
     console.log("points: ", this.difficulty!.getPoints())
+    this.scene.start('game-over-scene', {
+      points: this.difficulty!.getPoints(),
+      level: this.difficulty!.getLevel(),
+      elapsedTime: (this.time.now - this.startTimestamp) / 1000
+    })
   }
 
   changeBackground() {

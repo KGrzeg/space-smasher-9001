@@ -23,6 +23,7 @@ export default {
       name,
       password: password,
       record: 0,
+      lastPlayed: 0,
     })
 
     return {
@@ -32,7 +33,7 @@ export default {
       token
     }
   },
-  
+
   login(password) {
     console.log("Logging user");
     const user = db.getUserByPassword(password)
@@ -47,8 +48,10 @@ export default {
       record: user.record,
     }, process.env.secret)
 
+    const { lastPlayed, ...strippedUser } = user;
+
     return {
-      ...user,
+      ...strippedUser,
       token
     }
   }

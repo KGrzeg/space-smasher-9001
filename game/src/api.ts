@@ -1,4 +1,3 @@
-
 const baseApiPath = "http://localhost:3000"
 
 export default {
@@ -70,5 +69,9 @@ export default {
 
   async top() {
     return this.get("top")
+  },
+
+  async start() {
+    return this.get("start")
   }
 }

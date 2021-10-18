@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import API from "../api"
 
 export default class StartScene extends Phaser.Scene {
 
@@ -42,8 +43,15 @@ export default class StartScene extends Phaser.Scene {
         color: 'yellow'
       }).setOrigin(0.5, 0.5)
 
-    this.input.on('pointerup', () => {
+    this.input.on('pointerup', async () => {
       window.freezeGui()
+      if (window.myStuff.token) {
+        try {
+          await API.start()
+        } catch (error) {
+          console.log("oops", error)
+        }
+      }
       this.scene.start('play-scene');
     });
   }

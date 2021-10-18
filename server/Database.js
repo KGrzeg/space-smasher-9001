@@ -28,6 +28,10 @@ class Database {
     return user
   }
 
+  getUserByName(username) {
+    return this.db.data.users.find(user => user.name === username)
+  }
+
   getUserByPassword(password) {
     return this.db.data.users.find(user => user.password === password)
   }
@@ -73,6 +77,20 @@ class Database {
     }
 
     return 0
+  }
+
+  getLastPlayed(username) {
+    const user = this.getUserByName(username)
+
+    return user.lastPlayed
+  }
+
+  async setLastPlayedToNow(username) {
+    const user = this.getUserByName(username)
+    user.lastPlayed = Date.now()
+
+    await this.db.write()
+    return user.lastPlayed
   }
 }
 

@@ -95,6 +95,14 @@ app.get("/top", (req, res) => {
   })
 })
 
+app.get("/start", protect, async (req, res) => {
+  await db.setLastPlayedToNow(req.user.name)
+
+  res.json({
+    status: "ok"
+  })
+})
+
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     res.status(401).send('invalid token...');

@@ -22,6 +22,10 @@ export default class PlayScene extends Phaser.Scene {
     if (window.myStuff.token) {
       const response = await API.record(pts, shts, time)
 
+      if (response.error) {
+        console.log("%c" + response.error, "color:red")
+      }
+
       if (response.rank) {
         rank = response.rank
         await window.updateTopList()

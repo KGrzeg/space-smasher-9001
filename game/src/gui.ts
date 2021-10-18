@@ -73,19 +73,20 @@ declare global {
       elements.name!.innerText = data.name!;
       elements.key!.innerText = key!;
     } else {
-      console.log("not logged in")
       elements.bar.logged!.style.display = "none"
       elements.bar.loggedout!.style.display = ""
     }
   }
 
   async function login() {
-    const key = prompt("Type in the #key")
+    let key = prompt("Type in the #key")
 
     if (!key) {
       alert("Login cancelled")
       return
     }
+
+    key = key.replace(/\#/g, '')
 
     const response = await API.login(key)
 

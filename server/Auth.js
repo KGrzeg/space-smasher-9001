@@ -1,10 +1,20 @@
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 import { randomBytes } from 'crypto'
 import jwt from 'jsonwebtoken'
 import db from './Database.js'
 
 export default {
   async createAccount(name) {
+    if (typeof name !== "string")
+      return {
+        error: "Incorrect name"
+      }
+
+    const re = /^[a-zA-z0-9_$][a-zA-z0-9 _$]{,15}$/
+    if (!re.test(name))
+      return {
+        error: "Incorrect name"
+      }
+
     console.log("Creating user");
     if (db.userExists(name)) {
       console.log("User exists");
@@ -36,6 +46,11 @@ export default {
 
   login(password) {
     console.log("Logging user");
+    if (typeof password !== "string")
+      return {
+        error: "User does not exists"
+      }
+
     const user = db.getUserByPassword(password)
 
     if (!user) {

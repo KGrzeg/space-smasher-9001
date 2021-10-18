@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore ./storage/ --exec babel-node server.js"
+    "dedv": "nodemon --ignore ./storage/ --exec babel-node server.js",
+    "start": "babel-node server.js"
   },
   "type": "module",
   "keywords": [],

@@ -109,7 +109,7 @@ app.use(function (err, req, res, next) {
   }
 });
 
-await db.read()
+(async function() {await db.read()})()
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {

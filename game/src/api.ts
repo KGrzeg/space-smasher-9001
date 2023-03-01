@@ -1,4 +1,4 @@
-const baseApiPath = "http://localhost:3000"
+const baseApiPath = process.env.API_PATH ?? "http://localhost:3000"
 
 export default {
   async post(path: string, data?: any) {

@@ -139,9 +139,9 @@ declare global {
   }
 
   function logout() {
-    const sure = confirm("Are you sure you want to logout? " +
-      "You won't be able to login again without #key. " +
-      "Make sure you copied #key before log out!\n\n" +
+    const sure = confirm("Are you sure you want to log out? " +
+      "You won't be able to login again without the #key. " +
+      "Make sure you have copied the #key before log out!\n\n" +
       "The #key: " + window.myStuff.key)
 
     if (!sure)

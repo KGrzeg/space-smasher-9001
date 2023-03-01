@@ -2,8 +2,8 @@
 
 Tested on node `v14.17.3`
 
-You can play the game [here](https://mystifying-hypatia-4b1cef.netlify.app/) (unfortunelly I can not setup server, so this instance do not provides ranking 😥).
-Please be patient. The game **will** load, but slower on the crappy, free hosting, than on localhost.
+You can play the game [here](https://mystifying-hypatia-4b1cef.netlify.app/) (unfortunelly I can not setup server, so this instance does not provide a ranking 😥).
+Please be patient waiting for the game to load. My crappy, free hosting need some time to load assets.
 
 The game was created for the first edition of [Hackerspace Trójmiasto's Community](https://github.com/hs3city/hs3-jam) Jam.
 
@@ -13,15 +13,15 @@ The game was created for the first edition of [Hackerspace Trójmiasto's Communi
 
 You need the [NodeJS](https://nodejs.org/en/) installed.
 
-The game's server do not serve game client's files. They are separately apps.
+~~The game's server do not serve game client's files. They are separately apps.~~
 The server is responsible for authentication and storing records.
 Data is stored as plain JSON files in `server/storage` directory.
 You do not have to setup any external database :)
 
 The game *should* work without server, with some limitations.
-Game works fine on desktop
+Space Smasher works fine on desktop, and not on mobile at all.
 
-Steering: `WSAD + Mouse`
+Keys: `WSAD + Mouse`
 
 ## Setup and run server
 ```sh

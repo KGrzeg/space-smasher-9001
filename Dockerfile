@@ -1,4 +1,7 @@
-FROM node:18
+FROM node:18-alpine
+
+RUN apk add g++ make py3-pip
+
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
@@ -10,7 +13,7 @@ RUN npm install --quite
 COPY game .
 RUN npm run build
 
-FROM node:18
+FROM node:18-alpine
 RUN mkdir -p /usr/app/public
 WORKDIR /usr/app
 

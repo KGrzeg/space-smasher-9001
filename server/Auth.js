@@ -9,7 +9,7 @@ export default {
         error: "Incorrect name"
       }
 
-    const re = /^[a-zA-z0-9_$][a-zA-z0-9 _$]{,15}$/
+    const re = /^[a-zA-Z0-9_$][a-zA-Z0-9 _$]{1,15}$/
     if (!re.test(name))
       return {
         error: "Incorrect name"

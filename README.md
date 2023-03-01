@@ -23,7 +23,27 @@ Space Smasher works fine on desktop, and not on mobile at all.
 
 Keys: `WSAD + Mouse`
 
-## Setup and run server
+## Use Docker
+
+### LETS GO
+```sh
+# run as a daemon
+🐧 docker run -d  -p 80:80 --restart=always --name smasher ghcr.io/kgrzeg/space-smasher-9001:latest
+# or run in foreground
+🐧 docker run -ti -p 80:80 --rm --name smasher ghcr.io/kgrzeg/space-smasher-9001:latest
+```
+
+### Build image locally
+```sh
+🐧 docker build -t space-smasher-9001:latest .
+# run as a daemon
+🐧 docker run -d  -p 80:80 --restart=always --name smasher space-smasher-9001
+# or run in foreground
+🐧 docker run -ti -p 80:80 --rm --name smasher space-smasher-9001
+```
+
+## Setup for development
+### run server
 ```sh
 🐧 cd server
 🐧 npm install # install dependencies
@@ -32,7 +52,7 @@ Keys: `WSAD + Mouse`
 🐧 npm start # the server listening on port 3000. 
 ```
 
-## Setup and run client
+### Setup and run client
 ```sh
 🐧 cd .. # only if your cwd is server directory
 🐧 cd game
@@ -42,5 +62,7 @@ Keys: `WSAD + Mouse`
 🐧 npm run build
 🐧 # your app is in dist directory, you need to serve it via www server
 ```
+
+The most knowledge you can get by reading the sources or dockerfile. I will fill the readme one day... maybe.
 
 ## Enjoy!

@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  smasher:
+    image: ghcr.io/kgrzeg/space-smasher-9001:latest 
+      #    build: .
+    container_name: space-smasher-9001 
+    ports:
+      - "80:80"
+    restart: always

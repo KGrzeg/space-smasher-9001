@@ -27,8 +27,7 @@ COPY server/package*.json ./
 RUN npm install --quite
 
 COPY server .
-RUN mkdir -p storage
-RUN cp .env.example .env
-RUN sed -i "s#HVuwh1dmaFhg4q1fef7xI4D6UeV7ImGK6NTp7i9eH6qiyJ9kxsvqPu29JXnhNGQY#$(head -c 12 /dev/random | base64)#" .env
+COPY ./run.sh .
 
-CMD ["npm", "run", "start"]
+CMD ./run.sh
+
